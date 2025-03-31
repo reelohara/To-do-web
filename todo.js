@@ -1,25 +1,33 @@
 // how to display the todos list on page load
 // how to add todo on button click
-
-const todoArr = retrieveData()
+let todoArr = retrieveData()
 const todoList= document.querySelector("#todos")
 const formEl = document.querySelector("#todoForm")
 const buttonEl = document.querySelector("button[value = addTodo]")
 const inputEl = document.querySelector("input[name = newTodo]")
-
-display()
-
+if (todoArr === null) {
+  todoArr = []
+}
+else {
+  retrieveData()
+  display()
+}
 formEl.addEventListener("submit", (e) => {
   e.preventDefault();
   const formData = new FormData(formEl)
   const name = formData.get('newTodo')
-
-  todoArr.push(name)
-  inputEl.value = ""
-  saveData()
-  display()
+  
+  if (name.length === 0) {
+    alert("Please don't leave the input empty")
+  } 
+  else {
+    todoArr.push(name)
+    inputEl.value = ""
+    saveData()
+    display()
+  }
 })
-
+console.log(todoArr)
 function display() {
   todoList.innerHTML = ""
   for (let i = 0; i < todoArr.length; i++) {
